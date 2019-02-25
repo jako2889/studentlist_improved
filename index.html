@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student List 2</title>
+    <link rel="stylesheet" href="studentlist.css" type="text/css" />
+  </head>
+  <body>
+    <h1>Students 1991</h1>
+    <header>
+      <nav>
+        <div class="filter_con">
+          <button class="filter_knap" data-house="alle">Alle</button>
+          <button class="filter_knap gryffindor" data-house="Gryffindor">
+            Gryffindor
+          </button>
+          <button class="filter_knap hufflepuff" data-house="Hufflepuff">
+            Hufflepuff
+          </button>
+          <button class="filter_knap ravenclaw" data-house="Ravenclaw">
+            Ravenclaw
+          </button>
+          <button class="filter_knap slytherin" data-house="Slytherin">
+            Slytherin
+          </button>
+        </div>
+        <div class="sort_con">
+          <button class="sort_knap">Alle</button>
+          <button class="sort_knap">First name</button>
+          <button class="sort_knap">Last name</button>
+          <button class="sort_knap">House</button>
+        </div>
+      </nav>
+    </header>
+
+    <template class="target">
+      <article class="stud_wrapper">
+        <div class="name"></div>
+        <div class="house"></div>
+        <img class="pic" src="" alt="Student image" />
+      </article>
+    </template>
+
+    <section class="stud_list_wrapper output"></section>
+
+    <script src="studentlist.js"></script>
+  </body>
+</html>
