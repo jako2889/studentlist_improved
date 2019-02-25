@@ -66,7 +66,7 @@ async function getJson() {
 
 
   // Hent JSON
-  let jsonObject = await fetch("http://petlatkea.dk/2019/hogwarts/students.json");
+  let jsonObject = await fetch("https://petlatkea.dk/2019/hogwarts/students.json");
 
   allStudents = await jsonObject.json();
 
