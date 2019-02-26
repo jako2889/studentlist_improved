@@ -61,24 +61,28 @@ function init() {
   // TODO: Load JSON, create clones, build list, add event listeners, show modal, find images, and other stuff ...
 }
 
+// HENTER JSON OG KALDER CREATEPROTOTYPE
 async function getJson() {
   console.log("getJson");
-
 
   // Hent JSON
   let jsonObject = await fetch("https://petlatkea.dk/2019/hogwarts/students.json");
 
   allStudents = await jsonObject.json();
 
- 
-
   console.log(allStudents);
 
-  // FOR EACH LOOP til hver student, der skal printes til eget array
+createPrototype(allStudents);
+}
+
+// FÅR PROTOTYPE AF JSON TIL NYT ARRAY
+function createPrototype(allStudents) {
+
+    // FOR EACH LOOP til hver student, der skal printes til eget array - PROTOTYPE
     
 allStudents.forEach(student => {
 
-  // CREATE Prototype object og lav til variable   
+  // CREATE Prototype object og lav til variable - Uppercase er prototype og lowercase student object
      let studentProto = Object.create(Student);
  
  // Tager funktionen/method fra min prototype array, der sætter data
@@ -91,8 +95,9 @@ allStudents.forEach(student => {
  });
 
 // Kald displaylist, så man kan vise liste i innerhtml
- displayList();
+ displayList(arrayOfStudents);
   // NOTE: Maybe also call SortbyFirst the first time... Investigate
+
 }
 
 // FUNCTION til at fjerne liste til filter
@@ -115,21 +120,9 @@ clearList();
 if (houseData === "alle") {
   displayList(arrayOfStudents);
 }else {
-  console.log("else");
   let listShown = filterByHouse(houseData);
+  displayList(listShown);
   
-  listShown.forEach(student => {
-    console.log("student");
-    let klon = postTarget.cloneNode(true).content;
-
-    klon.querySelector(".name").textContent = student.fullname;
-    klon.querySelector(".house").textContent = student.house;
-    klon.querySelector(".pic").src = "images/" + student.image() + ".png"; 
-    
-
-    postOutput.appendChild(klon);
-
-  });
 }
 
 });
@@ -146,14 +139,25 @@ function filterByHouse( house ) {
   return arrayOfStudents.filter( filterHouse );
 }
 
-// Her vises eleverne i et loop (for each)
-function displayList() {
+// SORT BY LIST
+function clickSortByFirst() {
+  console.log("clickSortByFirst");
+}
+
+function sortByFirst() {
+  console.log("sortByFirst");
+}
+
+// Her vises eleverne i et loop (for each) - parameter (students) modtages fra de calls med arrayByStudents & filtreret listshown
+function displayList(students) {
   
-  arrayOfStudents.forEach(student => {
+  students.forEach(student => {
     console.log("student");
     let klon = postTarget.cloneNode(true).content;
 
-    klon.querySelector(".name").textContent = student.fullname;
+    //klon.querySelector(".name").textContent = student.fullname;
+    klon.querySelector(".name").textContent = student.firstname();
+    klon.querySelector(".lastname").textContent = student.lastname();
     klon.querySelector(".house").textContent = student.house;
     klon.querySelector(".pic").src = "images/" + student.image() + ".png"; 
 
@@ -166,10 +170,4 @@ function displayList() {
 
 
 
-function clickSortByFirst() {
-  console.log("clickSortByFirst");
-}
 
-function sortByFirst() {
-  console.log("sortByFirst");
-}

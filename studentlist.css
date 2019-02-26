@@ -37,3 +37,54 @@ button {
 button:hover {
   opacity: 0.8;
 }
+
+.name {
+  font-size: 1.2em;
+}
+.lastname {
+  font-size: 1.2em;
+}
+.house {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+.pic {
+  width: 100%;
+}
+.stud_wrapper {
+  padding: 1em;
+  cursor: pointer;
+  width: 200px;
+
+  border: 2px solid black;
+  text-align: center;
+ 
+}
+.stud_wrapper:hover {
+  opacity: 0.8;
+  
+} 
+.filter_con {
+  text-align: center;
+}
+
+.sort_con {
+  text-align: center;
+}
+
+.stud_list_wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 5px;
+
+
+}
+
+header {
+  margin-bottom: 3em;
+}
+h1 {
+  text-align: center;
+  padding: 1em;
+  font-size: 2.5em;
+}
