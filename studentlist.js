@@ -7,7 +7,9 @@ window.addEventListener("DOMContentLoaded", init);
 let allStudents;
 let postTarget = document.querySelector(".target");
 let postOutput = document.querySelector(".output");
-let house = "alle";
+//let house = "alle";
+let houseData = "alle";
+let filteredList;
 
 // EMPTY array som man kan manipulere med uden at påvirke json
 const arrayOfStudents = [];
@@ -16,10 +18,6 @@ const arrayOfStudents = [];
 const Student = {
   fullname: "-full name-",
   house: "-house type-",
-  firstname() {
-   const letter = this.fullname.split(" ");
-   return letter[0];
-  },
   middlename() {
    const letter = this.fullname.split(" ");
    return letter[1];
@@ -42,8 +40,10 @@ const Student = {
        // sæt prototype lig med json elementer    
   this.fullname = student.fullname;
   this.house = student.house;
-  this.firstname();
-  this.lastname();
+  const letter = this.fullname.split(" ");
+
+  this.firstname = letter[0];
+  this.lastname = letter[letter.length - 1];
   this.image();
   }
 }
@@ -94,9 +94,10 @@ allStudents.forEach(student => {
      
  });
 
-// Kald displaylist, så man kan vise liste i innerhtml
- displayList(arrayOfStudents);
-  // NOTE: Maybe also call SortbyFirst the first time... Investigate
+// Kald filterlist
+ 
+ filterList(houseData);
+
 
 }
 
@@ -116,36 +117,85 @@ let houseData = this.getAttribute("data-house");
 // FUNCTION THAT CLEARS INNER HTML OF OUTPUT
 clearList();
 
-// IF STATEMENTS til at enten vise hele listen eller den der er valgt - bruger foreach loop til at klone valgte houses 
-if (houseData === "alle") {
-  displayList(arrayOfStudents);
-}else {
-  let listShown = filterByHouse(houseData);
-  displayList(listShown);
-  
-}
+// KALD FILTERLIST til at enten vise hele listen eller den der er valgt 
+filterList(houseData);
 
+  
 });
 
   });
+}
+function filterList(houseData) {
+  filteredList = filterByHouse(houseData);
+  displayList(filteredList);
+  sortByEventListener();
+
 }
 
 function filterByHouse( house ) {
   console.log("filter");
   function filterHouse( element ) {
+    if (house === "alle") {
+      return true;
+    }else {
       return element.house === house;
+    }
+      
   }
 
   return arrayOfStudents.filter( filterHouse );
 }
+// SORT EVENT LISTENER
+function sortByEventListener() {
+    // EVENTLISTENER på alle
+    document.querySelectorAll(".sort_knap").forEach(knap => {
+      knap.addEventListener("click", function() {
+      let sortData = this.getAttribute("data-sort");
+      
 
-// SORT BY LIST
-function clickSortByFirst() {
-  console.log("clickSortByFirst");
+      
+      // KALD FILTERLIST til at enten vise hele listen eller den der er valgt 
+      //filterList(houseData);
+      if(sortData === "data-first") {
+       let firstnameSort = filteredList.sort(SortByFirstName);
+
+
+       clearList();
+
+       displayList(firstnameSort);
+
+      console.table(filteredList.sort(SortByFirstName));
+      }else if(sortData === "data-last") {
+        let lastnameSort = filteredList.sort(SortByLastName);
+
+        clearList();
+
+        displayList(lastnameSort);
+      }
+        
+      });
+    });
+
 }
 
-function sortByFirst() {
+
+// SORT BY LIST
+function SortByFirstName(a, b) {
+  console.log("clickSortByFirst");
+  if( a.firstname < b.firstname) {
+    return -1;
+}else {
+    return 1;
+}
+}
+
+function SortByLastName(a, b) {
   console.log("sortByFirst");
+  if( a.lastname < b.lastname) {
+    return -1;
+}else {
+    return 1;
+}
 }
 
 // Her vises eleverne i et loop (for each) - parameter (students) modtages fra de calls med arrayByStudents & filtreret listshown
@@ -156,8 +206,8 @@ function displayList(students) {
     let klon = postTarget.cloneNode(true).content;
 
     //klon.querySelector(".name").textContent = student.fullname;
-    klon.querySelector(".name").textContent = student.firstname();
-    klon.querySelector(".lastname").textContent = student.lastname();
+    klon.querySelector(".name").textContent = student.firstname;
+    klon.querySelector(".lastname").textContent = student.lastname;
     klon.querySelector(".house").textContent = student.house;
     klon.querySelector(".pic").src = "images/" + student.image() + ".png"; 
 
