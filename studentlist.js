@@ -211,13 +211,29 @@ function displayList(students) {
     klon.querySelector(".house").textContent = student.house;
     klon.querySelector(".pic").src = "images/" + student.image() + ".png"; 
 
+    klon.querySelector(".stud_wrapper").addEventListener("click",() => {
+            
+      visModal(student); 
+  });  
+
     postOutput.appendChild(klon);
 
   });
 
     }
 
-
-
-
+       //Funktioner til at vise og fjerne modal vinduet
+       function visModal(student) {
+         console.log("hej");
+        modal.classList.add("vis");
+        modal.querySelector(".name").textContent = student.firstname;
+        modal.querySelector(".lastname").textContent = student.lastname;
+        modal.querySelector(".pic").src = "images/" + student.image() + ".png"; 
+        modal.querySelector(".pic").style.width = "30%";
+        modal.querySelector(".close").addEventListener("click", skjulModal);
+    }
+    function skjulModal() {
+        
+        modal.classList.remove("vis");
+    }     
 
