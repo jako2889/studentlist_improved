@@ -112,7 +112,7 @@ function housebuttonEventListener() {
   // EVENTLISTENER på alle
   document.querySelectorAll(".filter_knap").forEach(knap => {
 knap.addEventListener("click", function() {
-let houseData = this.getAttribute("data-house");
+houseData = this.getAttribute("data-house");
 
 // FUNCTION THAT CLEARS INNER HTML OF OUTPUT
 clearList();
@@ -231,8 +231,25 @@ function displayList(students) {
         modal.querySelector(".pic").src = "images/" + student.image() + ".png"; 
         modal.querySelector(".pic").style.width = "30%";
         modal.querySelector(".close").addEventListener("click", skjulModal);
+
+       if (student.house === "Hufflepuff") {
+         console.log("hufflepuff");
+         modal.querySelector("#modal-content").classList.add("hufflepuff");
+       }else if(student.house === "Gryffindor") {
+         console.log("gryffindor");
+        modal.querySelector("#modal-content").classList.add("gryffindor");
+       }else if(student.house === "Ravenclaw") {
+        modal.querySelector("#modal-content").classList.add("ravenclaw");
+       }else if(student.house === "Slytherin") {
+        modal.querySelector("#modal-content").classList.add("slytherin");
+       }
+
     }
     function skjulModal() {
+      modal.querySelector("#modal-content").classList.remove("slytherin");
+      modal.querySelector("#modal-content").classList.remove("ravenclaw");
+      modal.querySelector("#modal-content").classList.remove("gryffindor");
+      modal.querySelector("#modal-content").classList.remove("hufflepuff");
         
         modal.classList.remove("vis");
     }     
