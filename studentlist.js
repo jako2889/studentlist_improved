@@ -14,6 +14,9 @@ let filteredList;
 // EMPTY array som man kan manipulere med uden at påvirke json
 const arrayOfStudents = [];
 
+// EMPTY array expelled students
+const arrayOfExpelled = [];
+
 // PROTOTYPE OBJECT til det tomme array, hvor vi kan tilføje elementer uden at påvirke json
 const Student = {
   fullname: "-full name-",
@@ -53,10 +56,14 @@ const Student = {
 function init() {
   console.log("init");
 
+  
+
   getJson();
   housebuttonEventListener();
   
+
   
+
 
   // TODO: Load JSON, create clones, build list, add event listeners, show modal, find images, and other stuff ...
 }
@@ -200,6 +207,7 @@ function SortByLastName(a, b) {
 
 // Her vises eleverne i et loop (for each) - parameter (students) modtages fra de calls med arrayByStudents & filtreret listshown
 function displayList(students) {
+  clearList();
   
   students.forEach(student => {
     console.log("student");
@@ -210,6 +218,8 @@ function displayList(students) {
     klon.querySelector(".lastname").textContent = student.lastname;
     klon.querySelector(".house").textContent = student.house;
     klon.querySelector(".pic").src = "images/" + student.image() + ".png"; 
+
+   
 
     klon.querySelector(".stud_wrapper").addEventListener("click",() => {
             
@@ -222,6 +232,42 @@ function displayList(students) {
 
     }
 
+  function clickExpel( event ) {
+      // TODO: Figure out if a button was clicked
+  console.log(event);
+  if(event.target.dataset.action === "remove") {
+      console.log("button was clicked");
+      expelStudent(event);
+  }
+  
+
+  }
+  function expelStudent( event ) {
+    console.log("Her er event",event);
+    // TODO: Figure out which element should be removed
+    let findStudent = event.target.dataset.firstname;
+
+    console.log(findStudent);
+    let indexStudent = arrayOfStudents.findIndex(student => student.firstname === findStudent);
+    
+    console.log("Index of student",indexStudent);
+
+
+    // TODO: Find the element index in the array
+
+    // TODO: Splice that element from the array
+    let RemovedStudent = arrayOfStudents.splice(indexStudent, 1);
+    arrayOfExpelled.push(...RemovedStudent);
+    console.log(arrayOfExpelled);
+
+    skjulModal();
+
+    // Re-display the list
+    
+    displayList(arrayOfStudents);
+}
+
+
        //Funktioner til at vise og fjerne modal vinduet
        function visModal(student) {
          console.log("hej");
@@ -230,6 +276,14 @@ function displayList(students) {
         modal.querySelector(".lastname").textContent = student.lastname;
         modal.querySelector(".pic").src = "images/" + student.image() + ".png"; 
         modal.querySelector(".pic").style.width = "30%";
+        modal.querySelector(".expel").dataset.firstname = student.firstname;
+        console.log("Her er",modal.querySelector("button").dataset.name = student.firstname);
+
+            // register Expel-button
+            modal.querySelector("#modal-content").addEventListener("click", clickExpel);
+
+        
+
         modal.querySelector(".close").addEventListener("click", skjulModal);
 
        if (student.house === "Hufflepuff") {
