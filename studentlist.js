@@ -17,6 +17,10 @@ const arrayOfStudents = [];
 // EMPTY array expelled students
 const arrayOfExpelled = [];
 
+// UMBRIDGE JSON
+
+let bloodlist;
+
 // PROTOTYPE OBJECT til det tomme array, hvor vi kan tilføje elementer uden at påvirke json
 const Student = {
   fullname: "-full name-",
@@ -48,6 +52,7 @@ const Student = {
   this.firstname = letter[0];
   this.lastname = letter[letter.length - 1];
   this.image();
+  this.blood = checkBloodStatus(this.lastname);
   }
 }
 
@@ -79,7 +84,55 @@ async function getJson() {
 
   console.log(allStudents);
 
+  //HENT JSON TIL UMBRIDGE
+  let jsonObjectUmbridge = await fetch("http://petlatkea.dk/2019/hogwarts/families.json");
+
+  bloodlist = await jsonObjectUmbridge.json();
+
+  console.log(bloodlist);
+
 createPrototype(allStudents);
+}
+
+// CHECK BLOODLIST
+function checkBloodStatus(lastname) {
+
+  let halfList = bloodlist.half;
+  let pureList = bloodlist.pure;
+
+ // VARIABLE for bloodtype 
+  let mud;
+  let pure;
+  let muggle;
+
+//FOREACH loop for each student with the same lastname as bloodtype lastname IF STATEMENT
+ halfList.forEach(bloodType => {
+
+ if(lastname === bloodType) {
+      console.log("Half",lastname);
+      mud = "Mud-blood";
+    } else {
+      muggle = "Muggle";
+    }
+return mud || muggle;
+  });
+  pureList.forEach(bloodType => {
+
+    if(lastname === bloodType) {
+      console.log("Pure",lastname);
+      pure = "Pure-blood";
+    } else {
+      muggle = "Muggle";
+    }
+return pure || muggle;
+  });
+
+
+
+// RETURN bloodtypes
+  return mud || pure || muggle;
+
+
 }
 
 // FÅR PROTOTYPE AF JSON TIL NYT ARRAY
@@ -210,7 +263,7 @@ function displayList(students) {
   clearList();
   
   students.forEach(student => {
-    console.log("student");
+
     let klon = postTarget.cloneNode(true).content;
 
     //klon.querySelector(".name").textContent = student.fullname;
@@ -218,6 +271,12 @@ function displayList(students) {
     klon.querySelector(".lastname").textContent = student.lastname;
     klon.querySelector(".house").textContent = student.house;
     klon.querySelector(".pic").src = "images/" + student.image() + ".png"; 
+    klon.querySelector(".bloodStatus").textContent = student.blood;
+    klon.querySelector(".bloodStatus").style.fontSize = "1.3em";
+    klon.querySelector(".bloodStatus").style.fontWeight = "700";
+    klon.querySelector(".bloodStatus").style.color = "red";
+    console.log(student.blood);
+
 
    
 
@@ -260,6 +319,31 @@ function displayList(students) {
     arrayOfExpelled.push(...RemovedStudent);
     console.log(arrayOfExpelled);
 
+    // Count each expelled student
+    const counts = {
+      Gryffindor: 0,
+      Slytherin: 0,
+      Hufflepuff: 0,
+      Ravenclaw: 0
+    };
+    arrayOfExpelled.forEach(student => {
+      counts[student.house]++;
+    });
+    console.log(counts.Ravenclaw);
+
+    let ravenclawRemoved = counts.Ravenclaw;
+    let gryffindorRemoved = counts.Gryffindor;
+    let hufflepuffRemoved = counts.Hufflepuff;
+    let slytherinRemoved = counts.Slytherin;
+
+
+
+// Tilføj dem til siden
+   document.querySelector(".ravenclawExpel").textContent = "Ravenclaw: " + ravenclawRemoved;
+   document.querySelector(".gryffindorExpel").textContent = "Gryffindor: " + gryffindorRemoved;
+   document.querySelector(".hufflepuffExpel").textContent = "Hufflepuff: " + hufflepuffRemoved;
+   document.querySelector(".slytherinExpel").textContent = "Slytherin: " + slytherinRemoved;
+
     skjulModal();
 
     // Re-display the list
@@ -277,7 +361,7 @@ function displayList(students) {
         modal.querySelector(".pic").src = "images/" + student.image() + ".png"; 
         modal.querySelector(".pic").style.width = "30%";
         modal.querySelector(".expel").dataset.firstname = student.firstname;
-        console.log("Her er",modal.querySelector("button").dataset.name = student.firstname);
+
 
             // register Expel-button
             modal.querySelector("#modal-content").addEventListener("click", clickExpel);
@@ -308,3 +392,5 @@ function displayList(students) {
         modal.classList.remove("vis");
     }     
 
+
+    // Inquisitorial squad use boolean to check if they should have a status

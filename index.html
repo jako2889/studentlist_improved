@@ -8,9 +8,17 @@
   </head>
   <body>
     <h1>Students 1991</h1>
+    <div class="countStudents"></div>
     <header>
       <nav>
         <div class="filter_con">
+          <h2>Expelled students:</h2>
+          <div class="expel_con">
+          <div class="ravenclawExpel"><h1>0</h1></div>
+          <div class="gryffindorExpel"><h1></h1></div>
+          <div class="hufflepuffExpel"><h1></h1></div>
+          <div class="slytherinExpel"><h1></h1></div>
+        </div>
           <button class="filter_knap" data-house="alle">Alle</button>
           <button class="filter_knap gryffindor" data-house="Gryffindor">
             Gryffindor
@@ -49,7 +57,11 @@
         <div data-firstname="firstname" class="name"></div>
         <div class="lastname"></div>
         <div class="house"></div>
+        <div class="blood_status"></div>
         <img class="pic" src="" alt="Student image" />
+        <div class="bloodStatus">
+          <h1></h1>
+        </div>
       </article>
     </template>
 
