@@ -66,9 +66,38 @@ button:hover {
 } 
 .filter_con {
   text-align: center;
+  display: grid;
+  grid-template-columns: 20vw 20vw;
+  grid-template-rows: 1fr 5vw;
+  grid-template-areas: "students expel"
+  "students_1 expel_1";
+
+  margin-bottom: 3em;
+  justify-content: center;
+}
+.expel_con {
+  grid-area: expel_1;
+
+
+  
+}
+.stud_con {
+  grid-area: students_1;
+  padding-top: 1em;
+  font-size: 1.5em;
+
+}
+.stud_titel {
+  grid-area: students;
+}
+.expel_titel {
+  grid-area: expel;
 }
 
 .sort_con {
+  text-align: center;
+}
+.filter_buttons {
   text-align: center;
 }
 
@@ -93,6 +122,10 @@ h1 {
 }
 .filter_con h1 {
   padding-bottom: 10px;
+}
+
+.stud_con h1 {
+  padding: 0;
 }
 
 /* MODAL */
@@ -138,4 +171,14 @@ margin: 1em;
 font-weight: 700;
 font-style: italic;
 
+}
+
+.expel {
+  background-color: black;
+  color: white;
+  margin: 10px; 
+}
+
+.show_inquisitor {
+  background-color: black;
 }

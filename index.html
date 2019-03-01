@@ -12,27 +12,34 @@
     <header>
       <nav>
         <div class="filter_con">
-          <h2>Expelled students:</h2>
+          <h2 class="expel_titel">Expelled students:</h2>
           <div class="expel_con">
           <div class="ravenclawExpel"><h1>0</h1></div>
           <div class="gryffindorExpel"><h1></h1></div>
           <div class="hufflepuffExpel"><h1></h1></div>
           <div class="slytherinExpel"><h1></h1></div>
         </div>
-          <button class="filter_knap" data-house="alle">Alle</button>
-          <button class="filter_knap gryffindor" data-house="Gryffindor">
-            Gryffindor
-          </button>
-          <button class="filter_knap hufflepuff" data-house="Hufflepuff">
-            Hufflepuff
-          </button>
-          <button class="filter_knap ravenclaw" data-house="Ravenclaw">
-            Ravenclaw
-          </button>
-          <button class="filter_knap slytherin" data-house="Slytherin">
-            Slytherin
-          </button>
+        <h2 class="stud_titel">Students at School</h2>
+        <div class="stud_con">
+            <div class="stud_all"><h1></h1></div>
+          </div>
+         
         </div>
+        <div class="filter_buttons">
+        <button class="filter_knap" data-house="alle">Alle</button>
+        <button class="filter_knap gryffindor" data-house="Gryffindor">
+          Gryffindor
+        </button>
+        <button class="filter_knap hufflepuff" data-house="Hufflepuff">
+          Hufflepuff
+        </button>
+        <button class="filter_knap ravenclaw" data-house="Ravenclaw">
+          Ravenclaw
+        </button>
+        <button class="filter_knap slytherin" data-house="Slytherin">
+          Slytherin
+        </button>
+      </div>
         <div class="sort_con">
           <button class="sort_knap" data-sort="data-first">First name</button>
           <button class="sort_knap" data-sort="data-last">Last name</button>
@@ -43,11 +50,15 @@
     <div id="modal">
       <div id="modal-content">
           <button class="close">close</button>
+          <p id="inquisitor">Member</p>
           <div data-firstname="firstname" class="name"></div>
           <div class="lastname"></div>
           <div class="house"></div>
           <img class="pic" src="" alt="Student image" />
+          <div class="bloodStatus"></div>
           <button class="expel" data-action="remove">Expel student</button>
+          <button class="Inquisitorial" data-add="add">Add to Inquisitorial Squad</button>
+          
 
       </div>
   </div>

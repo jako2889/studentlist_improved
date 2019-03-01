@@ -11,6 +11,8 @@ let postOutput = document.querySelector(".output");
 let houseData = "alle";
 let filteredList;
 
+let member;
+
 // EMPTY array som man kan manipulere med uden at påvirke json
 const arrayOfStudents = [];
 
@@ -34,7 +36,7 @@ const Student = {
    return letter[letter.length - 1];
   },
   image() {
-   const letter = this.fullname.split(" ");
+   const letter = this.fullname.split(/[ -]/);
    const firstnameLow = letter[0].toLocaleLowerCase();
    const firstnameFirstLetter = Array.from(firstnameLow[0]);
    const lastnameLow = letter[letter.length - 1].toLocaleLowerCase();
@@ -62,6 +64,7 @@ function init() {
   console.log("init");
 
   
+  
 
   getJson();
   housebuttonEventListener();
@@ -70,7 +73,7 @@ function init() {
   
 
 
-  // TODO: Load JSON, create clones, build list, add event listeners, show modal, find images, and other stuff ...
+
 }
 
 // HENTER JSON OG KALDER CREATEPROTOTYPE
@@ -114,7 +117,7 @@ function checkBloodStatus(lastname) {
     } else {
       muggle = "Muggle";
     }
-return mud || muggle;
+
   });
   pureList.forEach(bloodType => {
 
@@ -124,7 +127,7 @@ return mud || muggle;
     } else {
       muggle = "Muggle";
     }
-return pure || muggle;
+
   });
 
 
@@ -261,6 +264,9 @@ function SortByLastName(a, b) {
 // Her vises eleverne i et loop (for each) - parameter (students) modtages fra de calls med arrayByStudents & filtreret listshown
 function displayList(students) {
   clearList();
+
+     // Tilføj Antal af studerende til siden for current
+     document.querySelector(".stud_all").textContent = arrayOfStudents["length"];
   
   students.forEach(student => {
 
@@ -331,6 +337,7 @@ function displayList(students) {
     });
     console.log(counts.Ravenclaw);
 
+    // FOR EXPELLED STUDENTS
     let ravenclawRemoved = counts.Ravenclaw;
     let gryffindorRemoved = counts.Gryffindor;
     let hufflepuffRemoved = counts.Hufflepuff;
@@ -338,22 +345,79 @@ function displayList(students) {
 
 
 
-// Tilføj dem til siden
+
+// Tilføj dem til siden for expelled
    document.querySelector(".ravenclawExpel").textContent = "Ravenclaw: " + ravenclawRemoved;
    document.querySelector(".gryffindorExpel").textContent = "Gryffindor: " + gryffindorRemoved;
    document.querySelector(".hufflepuffExpel").textContent = "Hufflepuff: " + hufflepuffRemoved;
    document.querySelector(".slytherinExpel").textContent = "Slytherin: " + slytherinRemoved;
 
+
+
+
     skjulModal();
 
+    alert("STUDENT IS EXPELLED");
     // Re-display the list
     
     displayList(arrayOfStudents);
 }
 
+// Click event call function that adds student to Inquisitorial squad and check if person is pure blood or slytherin 
+function clickInquisitorial(event) {
+  console.log("hej");
+  if(event.target.dataset.add === "add") {
+      console.log("Add button was clicked");
+      InquisitorialStudent(event);
+  }
 
-       //Funktioner til at vise og fjerne modal vinduet
-       function visModal(student) {
+}
+function InquisitorialStudent(event) {
+  let findPureblood = event.target.dataset.blood;
+  console.log("Bloodstatus",findPureblood);
+
+
+  if(findPureblood === "Pure-blood" || houseData === "Slytherin") {
+    console.log("pureblood or Slytherin is chosen");
+
+    //Show bloodtype
+    console.log(event.target.dataset.blood);
+
+    let pureCheck = event.target.dataset.blood;
+
+    console.log("SQUAD",pureCheck);
+
+
+    
+    //Find student
+    console.log(arrayOfStudents);
+    let findStudent = arrayOfStudents.find(name => name.firstname === event.target.dataset.firstname);
+    console.log("get student", findStudent);
+    let setStatus = findStudent.blood === pureCheck;
+    console.log("Student is pure blood", setStatus);
+    findStudent.isMember = true;
+
+console.log(findStudent);
+
+    //SET Inquisitorial Status
+
+
+  }else{
+    alert("You cant join if you're not from Slytherin or a Pure-blood");
+    
+  }
+}
+
+
+
+
+function clickInquisitorialRemove(event) {}
+
+function InquisitorialRemove(event) {}
+
+  //Funktioner til at vise og fjerne modal vinduet
+  function visModal(student) {
+    
          console.log("hej");
         modal.classList.add("vis");
         modal.querySelector(".name").textContent = student.firstname;
@@ -361,10 +425,31 @@ function displayList(students) {
         modal.querySelector(".pic").src = "images/" + student.image() + ".png"; 
         modal.querySelector(".pic").style.width = "30%";
         modal.querySelector(".expel").dataset.firstname = student.firstname;
+        modal.querySelector(".bloodStatus").textContent = student.blood;
+        modal.querySelector(".bloodStatus").style.fontSize = "1.3em";
+        modal.querySelector(".bloodStatus").style.fontWeight = "700";
+        modal.querySelector(".bloodStatus").style.color = "red";
+        modal.querySelector(".Inquisitorial").dataset.blood = student.blood;
+        modal.querySelector(".Inquisitorial").dataset.firstname = student.firstname;
+
+
+        
 
 
             // register Expel-button
             modal.querySelector("#modal-content").addEventListener("click", clickExpel);
+
+            // Register Inquisitorial-button
+          modal.querySelector("#modal-content").addEventListener("click", clickInquisitorial);
+
+
+          if(student.isMember === true) {
+            modal.querySelector("#modal-content").classList.add("show_inquisitor");
+            console.log("HELO BRITHER",student);
+        
+          }else {
+            modal.querySelector("#modal-content").classList.remove("show_inquisitor");
+          } 
 
         
 
@@ -382,8 +467,12 @@ function displayList(students) {
         modal.querySelector("#modal-content").classList.add("slytherin");
        }
 
+
+
+
     }
-    function skjulModal() {
+
+  function skjulModal() {
       modal.querySelector("#modal-content").classList.remove("slytherin");
       modal.querySelector("#modal-content").classList.remove("ravenclaw");
       modal.querySelector("#modal-content").classList.remove("gryffindor");
@@ -394,3 +483,7 @@ function displayList(students) {
 
 
     // Inquisitorial squad use boolean to check if they should have a status
+
+    // FOR HACKING BLOOD STATUS Lav If statement, hvis pureblood === pureblood gør til muggle / mud-blood
+    // else if math.random(0 - 0.5 vær mud-blood)
+    // else math.random(0.5 - 1 være muggle)
