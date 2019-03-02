@@ -401,6 +401,8 @@ function InquisitorialStudent(event) {
     console.log("Student is pure blood", setStatus);
     findStudent.isMember = true;
 
+    alert("Welcome to the Inquisitorial Squad");
+
 console.log(findStudent);
 
 
@@ -426,6 +428,7 @@ function InquisitorialRemove(event) {
   let findStudent = arrayOfStudents.find(name => name.firstname === event.target.dataset.firstname);
   console.log("get student", findStudent);
 
+  alert("You're no longer part of the Inquisitorial Squad");
  
   findStudent.isMember = false;
   console.log(findStudent.isMember);
