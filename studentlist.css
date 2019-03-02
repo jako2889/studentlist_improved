@@ -181,4 +181,12 @@ font-style: italic;
 
 .show_inquisitor {
   background-color: black;
+  color: white;
+}
+
+.InquisitorialRemove {
+  display: none;
+}
+.InquisitorialAdd {
+  display: block;
 }

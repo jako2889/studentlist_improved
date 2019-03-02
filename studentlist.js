@@ -88,7 +88,7 @@ async function getJson() {
   console.log(allStudents);
 
   //HENT JSON TIL UMBRIDGE
-  let jsonObjectUmbridge = await fetch("http://petlatkea.dk/2019/hogwarts/families.json");
+  let jsonObjectUmbridge = await fetch("https://petlatkea.dk/2019/hogwarts/families.json");
 
   bloodlist = await jsonObjectUmbridge.json();
 
@@ -369,11 +369,17 @@ function clickInquisitorial(event) {
   if(event.target.dataset.add === "add") {
       console.log("Add button was clicked");
       InquisitorialStudent(event);
-  }
+  } else if(event.target.dataset.add === "remove") {
+    console.log("Remove button was clicked");
+    InquisitorialRemove(event);
+}
 
 }
 function InquisitorialStudent(event) {
   let findPureblood = event.target.dataset.blood;
+  //Find student
+  let findStudent = arrayOfStudents.find(name => name.firstname === event.target.dataset.firstname);
+  console.log("get student", findStudent);
   console.log("Bloodstatus",findPureblood);
 
 
@@ -389,31 +395,41 @@ function InquisitorialStudent(event) {
 
 
     
-    //Find student
-    console.log(arrayOfStudents);
-    let findStudent = arrayOfStudents.find(name => name.firstname === event.target.dataset.firstname);
-    console.log("get student", findStudent);
+    
+    
     let setStatus = findStudent.blood === pureCheck;
     console.log("Student is pure blood", setStatus);
     findStudent.isMember = true;
 
 console.log(findStudent);
 
-    //SET Inquisitorial Status
 
 
-  }else{
+  } 
+  
+  //IF Not pureblood or slytherin alert
+else{
     alert("You cant join if you're not from Slytherin or a Pure-blood");
     
   }
+
+
 }
 
 
+function InquisitorialRemove(event) {
+  console.log(event);
+  console.log("jeg er blevet klikket");
+  let findPureblood = event.target.dataset.blood;
+  console.log("found pureblood for remove", findPureblood);
 
+  let findStudent = arrayOfStudents.find(name => name.firstname === event.target.dataset.firstname);
+  console.log("get student", findStudent);
 
-function clickInquisitorialRemove(event) {}
-
-function InquisitorialRemove(event) {}
+ 
+  findStudent.isMember = false;
+  console.log(findStudent.isMember);
+}
 
   //Funktioner til at vise og fjerne modal vinduet
   function visModal(student) {
@@ -433,7 +449,6 @@ function InquisitorialRemove(event) {}
         modal.querySelector(".Inquisitorial").dataset.firstname = student.firstname;
 
 
-        
 
 
             // register Expel-button
@@ -442,13 +457,20 @@ function InquisitorialRemove(event) {}
             // Register Inquisitorial-button
           modal.querySelector("#modal-content").addEventListener("click", clickInquisitorial);
 
-
+         // ADD INQUISITORIAL SQUAD STYLE
           if(student.isMember === true) {
             modal.querySelector("#modal-content").classList.add("show_inquisitor");
-            console.log("HELO BRITHER",student);
+            modal.querySelector("#InquisitorialBtn").classList.remove("InquisitorialRemove");
+            modal.querySelector("#InquisitorialBtn").classList.add("InquisitorialAdd");
+
+            modal.querySelector("#InquisitorialBtn").dataset.blood = student.blood;
+            modal.querySelector("#InquisitorialBtn").dataset.firstname = student.firstname;
         
           }else {
             modal.querySelector("#modal-content").classList.remove("show_inquisitor");
+            modal.querySelector("#InquisitorialBtn").classList.remove("InquisitorialAdd");
+            modal.querySelector("#InquisitorialBtn").classList.add("InquisitorialRemove");
+           
           } 
 
         
