@@ -159,9 +159,38 @@ allStudents.forEach(student => {
 
 // Kald filterlist
  
+createMyself();
  filterList(houseData);
 
 
+}
+
+// CREATE AND ADD MYSELF AS STUDENT TO LIST
+
+function createMyself() {
+
+  let myselfStudent = {
+    fullname: "Jakob Falkenberg Hansen",
+    house: "Gryffindor",
+    firstname: "Jakob",
+    lastname: "Hansen",
+    image() {
+      const letter = this.fullname.split(/[ -]/);
+      const firstnameLow = letter[0].toLocaleLowerCase();
+      const firstnameFirstLetter = Array.from(firstnameLow[0]);
+      const lastnameLow = letter[letter.length - 1].toLocaleLowerCase();
+   
+      
+      return `${lastnameLow}_${firstnameFirstLetter}`;
+      
+     },
+     blood: "Pure-blood"
+    
+  };
+
+  // Push MYSELF too array
+  arrayOfStudents.push(myselfStudent);
+  console.log(arrayOfStudents);
 }
 
 // FUNCTION til at fjerne liste til filter
@@ -317,6 +346,15 @@ function displayList(students) {
     
     console.log("Index of student",indexStudent);
 
+     if (findStudent === "Jakob") {
+
+      console.log("Jakob er valgt");
+      
+      alert("YOU CANT EXPELL JAKOB");
+
+      window.location.href = window.location.href;
+
+     } else{
 
     // TODO: Find the element index in the array
 
@@ -361,6 +399,11 @@ function displayList(students) {
     // Re-display the list
     
     displayList(arrayOfStudents);
+
+     }
+
+
+
 }
 
 // Click event call function that adds student to Inquisitorial squad and check if person is pure blood or slytherin 
@@ -402,6 +445,7 @@ function InquisitorialStudent(event) {
     findStudent.isMember = true;
 
     alert("Welcome to the Inquisitorial Squad");
+    skjulModal();
 
 console.log(findStudent);
 
@@ -431,6 +475,7 @@ function InquisitorialRemove(event) {
   alert("You're no longer part of the Inquisitorial Squad");
  
   findStudent.isMember = false;
+  skjulModal();
   console.log(findStudent.isMember);
 }
 
