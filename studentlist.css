@@ -157,7 +157,6 @@ h1 {
  
 }
 
-
 #modal.vis {
 opacity: 1;
 pointer-events: all;
@@ -189,4 +188,27 @@ font-style: italic;
 }
 .InquisitorialAdd {
   display: block;
+}
+
+.expel_jakob {
+  background-color: black;
+  transition-duration: 5s;
+  transition: ease;
+}
+.expel_jakobText {
+  color: green;
+  font-size: 2em;
+  font-family: 'Shadows Into Light', cursive;
+  text-align: center;
+  padding-top: 5em;
+
+  animation-name: example;
+  animation-duration: 4s;
+
+}
+@keyframes example {
+  0%   {color: red; font-size: 2em;}
+  25%  {color: green;}
+  50%  {color: red;}
+  100% {color: green; font-size: 3.5em;}
 }

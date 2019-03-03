@@ -350,9 +350,33 @@ function displayList(students) {
 
       console.log("Jakob er valgt");
       
-      alert("YOU CANT EXPELL JAKOB");
 
-      window.location.href = window.location.href;
+      skjulModal();
+
+      
+
+      document.querySelector(".stud_list_wrapper").style.display = "none";
+      document.querySelector("header").style.display = "none";
+
+    
+
+      document.querySelector("body").classList.add("expel_jakob");
+
+      document.querySelector("body").addEventListener('transitionend', () => {
+        console.log('Transition ended');
+
+
+
+        document.querySelector("body").classList.add("expel_jakobText");
+
+        document.querySelector("body").textContent = "I solemly swear that I am up to NO GOOD";
+
+        setTimeout(function(){ window.location.href = window.location.href; }, 3000);
+
+    
+      });
+
+   
 
      } else{
 
@@ -487,7 +511,7 @@ function InquisitorialRemove(event) {
         modal.querySelector(".name").textContent = student.firstname;
         modal.querySelector(".lastname").textContent = student.lastname;
         modal.querySelector(".pic").src = "images/" + student.image() + ".png"; 
-        modal.querySelector(".pic").style.width = "30%";
+        modal.querySelector(".pic").style.width = "25%";
         modal.querySelector(".expel").dataset.firstname = student.firstname;
         modal.querySelector(".bloodStatus").textContent = student.blood;
         modal.querySelector(".bloodStatus").style.fontSize = "1.3em";
